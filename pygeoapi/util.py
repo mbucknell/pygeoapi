@@ -31,6 +31,7 @@
 
 from datetime import date, datetime, time
 import logging
+from decimal import Decimal
 
 import yaml
 
@@ -101,6 +102,8 @@ def json_serial(obj):
     if isinstance(obj, (datetime, date, time)):
         serial = obj.isoformat()
         return serial
+    elif isinstance(obj, Decimal):
+        return float(obj)
 
     msg = '{} type {} not serializable'.format(obj, type(obj))
     LOGGER.error(msg)

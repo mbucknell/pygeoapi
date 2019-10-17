@@ -200,7 +200,7 @@ class PostgreSQLProvider(BaseProvider):
         with DatabaseConnection(self.conn_dic, self.table) as db:
             cursor = db.conn.cursor(cursor_factory=RealDictCursor)
             sql_query = SQL("DECLARE \"geo_cursor\" CURSOR FOR \
-             SELECT {0},ST_AsGeoJSON({1}) FROM {2}").\
+             SELECT {0},public.ST_AsGeoJSON({1}) FROM {2}").\
                 format(db.columns,
                        Identifier('geom'),
                        Identifier(self.table))
@@ -247,7 +247,7 @@ class PostgreSQLProvider(BaseProvider):
         with DatabaseConnection(self.conn_dic, self.table) as db:
             cursor = db.conn.cursor(cursor_factory=RealDictCursor)
 
-            sql_query = SQL("select {0},ST_AsGeoJSON({1}) \
+            sql_query = SQL("select {0},public.ST_AsGeoJSON({1}) \
             from {2} WHERE {3}=%s").format(db.columns,
                                            Identifier('geom'),
                                            Identifier(self.table),
